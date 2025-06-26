@@ -1,10 +1,12 @@
 ---
-title: Burns Database
-emoji: 😻
-colorFrom: yellow
-colorTo: red
+title: burns-database
+emoji: 🐳
+colorFrom: purple
+colorTo: gray
 sdk: static
 pinned: false
+tags:
+  - deepsite
 ---
 
 Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference

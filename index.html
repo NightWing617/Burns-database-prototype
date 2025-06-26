@@ -1,19 +1,618 @@
-<!doctype html>
-<html>
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<title>My static Space</title>
-		<link rel="stylesheet" href="style.css" />
-	</head>
-	<body>
-		<div class="card">
-			<h1>Welcome to your static Space!</h1>
-			<p>You can modify this app directly by editing <i>index.html</i> in the Files and versions tab.</p>
-			<p>
-				Also don't forget to check the
-				<a href="https://huggingface.co/docs/hub/spaces" target="_blank">Spaces documentation</a>.
-			</p>
-		</div>
-	</body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BurnBank - Educational Burn Resource Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'medical-blue': '#1A56DB',
+                        'primary-gray': '#F8FAFC',
+                        'accent-gray': '#E2E8F0',
+                        'border-gray': '#CBD5E1',
+                    },
+                    fontFamily: {
+                        'sans': ['Lato', 'sans-serif'],
+                        'serif': ['Merriweather', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .clinical-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+        
+        .burn-card:hover {
+            transform: translateY(-4px);
+            transition: transform 0.3s ease;
+        }
+        
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .tag {
+            display: inline-block;
+            background-color: #E1F0FF;
+            border-radius: 12px;
+            padding: 4px 10px;
+            margin-right: 6px;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
+        }
+        
+        .decision-yes {
+            background-color: #FEE2E2;
+            color: #B91C1C;
+        }
+        
+        .decision-no {
+            background-color: #DCFCE7;
+            color: #166534;
+        }
+        
+        .clinical-icon {
+            background-color: #E0F2FE;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+        
+        .burn-detail-info {
+            border-left: 3px solid #1A56DB;
+            padding-left: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .image-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            }
+            
+            .clinical-detail-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-white clinical-shadow">
+        <div class="container mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center">
+                <div class="bg-blue-100 rounded-lg p-2 mr-3">
+                    <i class="fas fa-fire text-medical-blue text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-medical-blue">Burn<span class="font-light">Bank</span></h1>
+                    <p class="text-xs text-gray-600">Educational Burn Resource Platform</p>
+                </div>
+            </div>
+            
+            <nav class="mt-4 md:mt-0">
+                <ul class="flex flex-wrap items-center space-x-1 md:space-x-4">
+                    <li><a href="#" class="text-medical-blue font-semibold pb-1 border-b-2 border-medical-blue">Home</a></li>
+                    <li><a href="#gallery" class="text-gray-600 hover:text-medical-blue p-2">Gallery</a></li>
+                    <li><a href="#" class="text-gray-600 hover:text-medical-blue p-2">Resources</a></li>
+                    <li><a href="#submit" class="text-gray-600 hover:text-medical-blue p-2">Submit Case</a></li>
+                    <li><button class="ml-4 bg-medical-blue text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">Sign In</button></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="flex-grow">
+        <!-- Hero Section -->
+        <section class="py-16 px-4" style="background: linear-gradient(to right, #F0F9FF, #FFFFFF)">
+            <div class="container mx-auto max-w-5xl">
+                <div class="md:flex items-center">
+                    <div class="md:w-1/2 mb-10 md:mb-0 md:pr-12">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-900">Advancing Burn Care Through Collective Clinical Knowledge</h2>
+                        <p class="text-lg text-gray-600 mb-6 font-serif">
+                            A comprehensive, ethically-sourced educational platform for medical professionals to study, analyze, and learn from real-world burn cases.
+                        </p>
+                        <div class="flex space-x-4">
+                            <a href="#gallery" class="bg-medical-blue text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition">Explore Cases</a>
+                            <a href="#" class="border border-medical-blue text-medical-blue px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 relative">
+                        <div class="flex space-x-4">
+                            <div class="w-1/2 space-y-4">
+                                <div class="bg-blue-50 rounded-lg overflow-hidden">
+                                    <div class="bg-gray-200 border-2 border-dashed rounded-xl w-full h-40"></div>
+                                </div>
+                                <div class="bg-gray-200 border-2 border-dashed rounded-xl w-full h-28"></div>
+                            </div>
+                            <div class="w-1/2 pt-8 space-y-4">
+                                <div class="bg-gray-200 border-2 border-dashed rounded-xl w-full h-28"></div>
+                                <div class="bg-blue-50 rounded-lg overflow-hidden">
+                                    <div class="bg-gray-200 border-2 border-dashed rounded-xl w-full h-40"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute -bottom-4 -left-4 bg-white p-4 rounded-lg shadow-lg">
+                            <div class="flex items-center">
+                                <div class="mr-3">
+                                    <div class="bg-yellow-500 rounded-full w-10 h-10 flex items-center justify-center">
+                                        <i class="fas fa-exclamation-triangle text-white"></i>
+                                    </div>
+                                </div>
+                                <p class="text-sm font-semibold">Case annotations by board-certified burn surgeons</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Stats Section -->
+        <section class="py-10 bg-primary-gray">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div>
+                        <p class="text-3xl md:text-4xl font-bold text-medical-blue">540+</p>
+                        <p class="text-gray-600 mt-2">Curated Cases</p>
+                    </div>
+                    <div>
+                        <p class="text-3xl md:text-4xl font-bold text-medical-blue">28</p>
+                        <p class="text-gray-600 mt-2">Expert Contributors</p>
+                    </div>
+                    <div>
+                        <p class="text-3xl md:text-4xl font-bold text-medical-blue">16</p>
+                        <p class="text-gray-600 mt-2">Peer-Reviewed Studies</p>
+                    </div>
+                    <div>
+                        <p class="text-3xl md:text-4xl font-bold text-medical-blue">98%</p>
+                        <p class="text-gray-600 mt-2">Accuracy in Classification</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Gallery Section -->
+        <section id="gallery" class="py-16 px-4 bg-white">
+            <div class="container mx-auto max-w-6xl">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold mb-4">Case Gallery</h2>
+                    <p class="text-gray-600 max-w-3xl mx-auto font-serif">Search and filter through our extensive database of annotated burn cases with expert insights</p>
+                </div>
+                
+                <!-- Filters and Search -->
+                <div class="bg-primary-gray rounded-xl p-6 mb-8">
+                    <div class="md:flex justify-between items-center">
+                        <div class="w-full md:w-1/3 mb-4 md:mb-0">
+                            <div class="relative">
+                                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                <input type="text" placeholder="Search cases..." class="pl-10 pr-4 py-3 w-full rounded-lg border border-border-gray focus:outline-none focus:ring-2 focus:ring-medical-blue">
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <button class="px-4 py-2 bg-white border border-border-gray rounded-lg hover:bg-accent-gray text-sm font-medium">All Cases</button>
+                            <button class="px-4 py-2 bg-white border border-border-gray rounded-lg hover:bg-accent-gray text-sm font-medium">Superficial</button>
+                            <button class="px-4 py-2 bg-white border border-border-gray rounded-lg hover:bg-accent-gray text-sm font-medium">Partial Thickness</button>
+                            <button class="px-4 py-2 bg-white border border-border-gray rounded-lg hover:bg-accent-gray text-sm font-medium">Full Thickness</button>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <p class="font-medium mb-3">Filter by Tags:</p>
+                        <div class="flex flex-wrap gap-2">
+                            <button class="tag hover:bg-blue-200">Hand</button>
+                            <button class="tag hover:bg-blue-200">Face</button>
+                            <button class="tag hover:bg-blue-200">Pediatric</button>
+                            <button class="tag hover:bg-blue-200">Chemical</button>
+                            <button class="tag hover:bg-blue-200">Electrical</button>
+                            <button class="tag hover:bg-blue-200">&gt;20% TBSA</button>
+                            <button class="tag hover:bg-blue-200">Infection Suspected</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Gallery Grid -->
+                <div class="image-grid">
+                    <!-- Burn Card 1 -->
+                    <a href="#case-detail" class="burn-card bg-white rounded-xl overflow-hidden clinical-shadow transition duration-300">
+                        <div class="relative">
+                            <div class="bg-gray-200 border-2 border-dashed rounded-t-xl w-full h-48"></div>
+                            <span class="absolute top-4 left-4 bg-red-100 text-red-800 text-xs font-semibold px-2 py-1 rounded">Full Thickness</span>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-3">
+                                <h3 class="font-bold">Case #4218</h3>
+                                <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-1 rounded">5-10% TBSA</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4">Thermal burn to anterior chest and right arm. Injury date: 05/12/2023</p>
+                            <div class="flex flex-wrap gap-1">
+                                <span class="tag">eschar</span>
+                                <span class="tag">chest</span>
+                                <span class="tag">grafting needed</span>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <!-- Burn Card 2 -->
+                    <a href="#case-detail" class="burn-card bg-white rounded-xl overflow-hidden clinical-shadow transition duration-300">
+                        <div class="relative">
+                            <div class="bg-gray-200 border-2 border-dashed rounded-t-xl w-full h-48"></div>
+                            <span class="absolute top-4 left-4 bg-yellow-100 text-yellow-800 text-xs font-semibold px-2 py-1 rounded">Partial Thickness</span>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-3">
+                                <h3 class="font-bold">Case #3376</h3>
+                                <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-1 rounded">&lt;5% TBSA</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4">Scald burn to left hand and forearm. Injury date: 03/04/2023</p>
+                            <div class="flex flex-wrap gap-1">
+                                <span class="tag">hand</span>
+                                <span class="tag">pediatric</span>
+                                <span class="tag">no grafting</span>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <!-- Burn Card 3 -->
+                    <a href="#case-detail" class="burn-card bg-white rounded-xl overflow-hidden clinical-shadow transition duration-300">
+                        <div class="relative">
+                            <div class="bg-gray-200 border-2 border-dashed rounded-t-xl w-full h-48"></div>
+                            <span class="absolute top-4 left-4 bg-red-100 text-red-800 text-xs font-semibold px-2 py-1 rounded">Full Thickness</span>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-3">
+                                <h3 class="font-bold">Case #2593</h3>
+                                <span class="bg-orange-100 text-orange-800 text-xs font-semibold px-2 py-1 rounded">15-20% TBSA</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4">Electrical burn to both legs. Injury date: 11/21/2022</p>
+                            <div class="flex flex-wrap gap-1">
+                                <span class="tag">legs</span>
+                                <span class="tag">escharotomy</span>
+                                <span class="tag">referral</span>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <!-- Burn Card 4 -->
+                    <a href="#case-detail" class="burn-card bg-white rounded-xl overflow-hidden clinical-shadow transition duration-300">
+                        <div class="relative">
+                            <div class="bg-gray-200 border-2 border-dashed rounded-t-xl w-full h-48"></div>
+                            <span class="absolute top-4 left-4 bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-1 rounded">Superficial</span>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-3">
+                                <h3 class="font-bold">Case #4872</h3>
+                                <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-1 rounded">&lt;5% TBSA</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4">Sunburn to back and shoulders. Injury date: 08/07/2023</p>
+                            <div class="flex flex-wrap gap-1">
+                                <span class="tag">superficial</span>
+                                <span class="tag">back</span>
+                                <span class="tag">no referral</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="text-center mt-10">
+                    <button class="bg-white border border-border-gray px-8 py-3 rounded-lg font-medium text-gray-700 hover:bg-primary-gray transition">Load More Cases</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Case Detail Example -->
+        <section id="case-detail" class="py-16 px-4 bg-primary-gray">
+            <div class="container mx-auto max-w-4xl bg-white rounded-xl clinical-shadow overflow-hidden">
+                <!-- Back button -->
+                <div class="p-6 border-b border-border-gray">
+                    <a href="#gallery" class="text-medical-blue hover:text-blue-700 font-medium flex items-center">
+                        <i class="fas fa-arrow-left mr-2"></i> Back to Case Gallery
+                    </a>
+                </div>
+                
+                <!-- Case Header -->
+                <div class="p-6">
+                    <div class="flex flex-wrap justify-between items-start">
+                        <div>
+                            <h2 class="text-2xl font-bold mb-2">Case #4218</h2>
+                            <p class="text-gray-600">Thermal burn to anterior chest and right arm</p>
+                        </div>
+                        <div class="bg-blue-50 text-medical-blue font-semibold px-4 py-2 rounded-lg text-sm">Case Created: May 15, 2023</div>
+                    </div>
+                </div>
+                
+                <!-- Main Content -->
+                <div class="p-6 border-t border-border-gray">
+                    <div class="clinical-detail-grid grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Image Column -->
+                        <div>
+                            <div class="bg-gray-200 border-2 border-dashed rounded-xl w-full h-80 mb-6"></div>
+                            
+                            <div class="bg-primary-gray rounded-lg p-5 mb-6">
+                                <h3 class="font-bold mb-3 flex items-center">
+                                    <span class="clinical-icon mr-3">
+                                        <i class="fas fa-tag text-medical-blue"></i>
+                                    </span>
+                                    AI-Generated Tags
+                                </h3>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="tag">full-thickness</span>
+                                    <span class="tag">chest</span>
+                                    <span class="tag">eschar</span>
+                                    <span class="tag">fluid resuscitation</span>
+                                    <span class="tag">grafting required</span>
+                                    <span class="tag">anterior trunk</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Data Column -->
+                        <div>
+                            <div class="mb-8">
+                                <h3 class="font-bold mb-4 flex items-center">
+                                    <span class="clinical-icon mr-3">
+                                        <i class="fas fa-file-medical text-medical-blue"></i>
+                                    </span>
+                                    Clinical Information
+                                </h3>
+                                
+                                <div class="space-y-4">
+                                    <div class="burn-detail-info">
+                                        <p class="text-gray-500 text-sm">TBSA Percentage</p>
+                                        <p class="font-bold">8%</p>
+                                    </div>
+                                    
+                                    <div class="burn-detail-info">
+                                        <p class="text-gray-500 text-sm">Burn Depth</p>
+                                        <p class="font-bold">Full Thickness (3rd Degree)</p>
+                                    </div>
+                                    
+                                    <div class="burn-detail-info">
+                                        <p class="text-gray-500 text-sm">Body Zones Affected</p>
+                                        <p class="font-bold">Anterior Chest, Right Upper Arm</p>
+                                    </div>
+                                    
+                                    <div class="burn-detail-info">
+                                        <p class="text-gray-500 text-sm">Date of Injury</p>
+                                        <p class="font-bold">May 12, 2023</p>
+                                    </div>
+                                    
+                                    <div class="burn-detail-info">
+                                        <p class="text-gray-500 text-sm">Mechanism</p>
+                                        <p class="font-bold">Flame (Gasoline fire)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-8">
+                                <h3 class="font-bold mb-4 flex items-center">
+                                    <span class="clinical-icon mr-3">
+                                        <i class="fas fa-check-circle text-medical-blue"></i>
+                                    </span>
+                                    Clinical Decisions
+                                </h3>
+                                
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="p-3 rounded-lg">
+                                        <p class="text-gray-500 text-sm mb-1">Needs Grafting</p>
+                                        <p class="font-bold decision-yes px-3 py-1 rounded-full text-center inline-block">Yes</p>
+                                    </div>
+                                    
+                                    <div class="p-3 rounded-lg">
+                                        <p class="text-gray-500 text-sm mb-1">Escharotomy Needed</p>
+                                        <p class="font-bold decision-no px-3 py-1 rounded-full text-center inline-block">No</p>
+                                    </div>
+                                    
+                                    <div class="p-3 rounded-lg">
+                                        <p class="text-gray-500 text-sm mb-1">Referral to Burn Center</p>
+                                        <p class="font-bold decision-yes px-3 py-1 rounded-full text-center inline-block">Yes</p>
+                                    </div>
+                                    
+                                    <div class="p-3 rounded-lg">
+                                        <p class="text-gray-500 text-sm mb-1">Infection Suspected</p>
+                                        <p class="font-bold decision-yes px-3 py-1 rounded-full text-center inline-block">Yes</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h3 class="font-bold mb-4 flex items-center">
+                                    <span class="clinical-icon mr-3">
+                                        <i class="fas fa-user-md text-medical-blue"></i>
+                                    </span>
+                                    Clinician Notes
+                                </h3>
+                                
+                                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
+                                    <p class="text-sm font-serif italic">
+                                        "Patient presented with circumferential full-thickness burns to anterior chest with evidence of eschar formation. Moderate edema present. Requires fluid resuscitation monitoring and surgical consultation for excision and grafting. Antibiotics started for suspected early infection."
+                                    </p>
+                                    <p class="text-right text-xs text-gray-500 mt-2">- Dr. Sarah Johnson, Burn Surgeon</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Submit Case Section -->
+        <section id="submit" class="py-16 px-4 bg-white">
+            <div class="container mx-auto max-w-4xl">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold mb-4">Submit a New Case</h2>
+                    <p class="text-gray-600 max-w-3xl mx-auto font-serif">Contribute to our educational database (Approved users only)</p>
+                </div>
+                
+                <div class="bg-gradient-to-br from-primary-gray to-white rounded-xl clinical-shadow p-8 border border-border-gray">
+                    <div class="md:flex">
+                        <div class="md:w-1/2 pr-0 md:pr-8 mb-8 md:mb-0">
+                            <h3 class="text-xl font-bold mb-4">Case Submission Guidelines</h3>
+                            
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <div class="bg-green-100 rounded-full h-6 w-6 flex items-center justify-center flex-shrink-0 mr-3">
+                                        <i class="fas fa-check text-green-600 text-xs"></i>
+                                    </div>
+                                    <span>All PHI must be completely removed following HIPAA guidelines</span>
+                                </li>
+                                
+                                <li class="flex items-start">
+                                    <div class="bg-green-100 rounded-full h-6 w-6 flex items-center justify-center flex-shrink-0 mr-3">
+                                        <i class="fas fa-check text-green-600 text-xs"></i>
+                                    </div>
+                                    <span>Provide complete clinical context including TBSA, depth, and mechanism</span>
+                                </li>
+                                
+                                <li class="flex items-start">
+                                    <div class="bg-green-100 rounded-full h-6 w-6 flex items-center justify-center flex-shrink-0 mr-3">
+                                        <i class="fas fa-check text-green-600 text-xs"></i>
+                                    </div>
+                                    <span>All submitted cases undergo peer review before publication</span>
+                                </li>
+                                
+                                <li class="flex items-start">
+                                    <div class="bg-green-100 rounded-full h-6 w-6 flex items-center justify-center flex-shrink-0 mr-3">
+                                        <i class="fas fa-check text-green-600 text-xs"></i>
+                                    </div>
+                                    <span>Upload high-resolution, properly de-identified photos only</span>
+                                </li>
+                                
+                                <li class="flex items-start">
+                                    <div class="bg-green-100 rounded-full h-6 w-6 flex items-center justify-center flex-shrink-0 mr-3">
+                                        <i class="fas fa-check text-green-600 text-xs"></i>
+                                    </div>
+                                    <span>Our team may request additional information before approval</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="md:w-1/2">
+                            <div class="bg-primary-gray p-6 rounded-lg">
+                                <h3 class="text-lg font-bold mb-4">Login to Submit</h3>
+                                <p class="text-gray-600 mb-4 text-sm">Case submission requires approved credentials</p>
+                                
+                                <form class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                                        <input type="email" class="w-full px-4 py-2 border border-border-gray rounded-lg focus:outline-none focus:ring-1 focus:ring-medical-blue">
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                                        <input type="password" class="w-full px-4 py-2 border border-border-gray rounded-lg focus:outline-none focus:ring-1 focus:ring-medical-blue">
+                                    </div>
+                                    
+                                    <div class="flex items-center">
+                                        <input type="checkbox" class="h-4 w-4 text-medical-blue rounded focus:ring-medical-blue">
+                                        <label class="ml-2 block text-sm text-gray-700">Remember me</label>
+                                    </div>
+                                    
+                                    <button type="submit" class="w-full bg-medical-blue text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition">Sign In to Submit</button>
+                                </form>
+                                
+                                <p class="text-center text-sm text-gray-600 mt-4">
+                                    Contact our team to <a href="#" class="text-medical-blue hover:underline">request contributor access</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-bold mb-4 flex items-center">
+                        <div class="bg-white p-1 rounded mr-2">
+                            <i class="fas fa-fire text-medical-blue"></i>
+                        </div>
+                        BurnBank
+                    </h3>
+                    <p class="text-gray-400 text-sm font-serif">
+                        A collaborative educational platform advancing burn care through ethical data sharing and expert collaboration.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Case Gallery</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Burn Assessment Guide</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Contributor Resources</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Research Publications</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">Legal & Ethics</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">De-identification Protocol</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">User Privacy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Ethics Approval</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">Contact</h4>
+                    <address class="text-gray-400 text-sm not-italic">
+                        Burn Education Resource Center<br>
+                        123 Medical Way<br>
+                        Boston, MA 02115<br>
+                        <span class="block mt-2">Email: info@burnbank.org</span>
+                        <span>Phone: (617) 555-0123</span>
+                    </address>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center">
+                <p class="text-gray-500 text-sm">
+                    Institutional Affiliations: Massachusetts General Hospital, Johns Hopkins Burn Center, UCSF Center for Burn Research
+                </p>
+                
+                <p class="text-gray-500 text-sm mt-4">
+                    <strong>Disclaimer:</strong> This site is for educational purposes only. Images are completely de-identified and published under strict ethical guidelines with institutional IRB approval (IRB #BUR-2022-0451). Not intended for diagnostic use.
+                </p>
+                
+                <p class="text-gray-500 text-sm mt-4">© 2023 BurnBank Educational Consortium. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple navigation for demo purposes
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+<p style="border-radius: 8px; text-align: center; font-size: 12px; color: #fff; margin-top: 16px;position: fixed; left: 8px; bottom: 8px; z-index: 10; background: rgba(0, 0, 0, 0.8); padding: 4px 8px;">Made with <img src="https://enzostvs-deepsite.hf.space/logo.svg" alt="DeepSite Logo" style="width: 16px; height: 16px; vertical-align: middle;display:inline-block;margin-right:3px;filter:brightness(0) invert(1);"><a href="https://enzostvs-deepsite.hf.space" style="color: #fff;text-decoration: underline;" target="_blank" >DeepSite</a> - 🧬 <a href="https://enzostvs-deepsite.hf.space?remix=qdj6rvaf9e/burns-database" style="color: #fff;text-decoration: underline;" target="_blank" >Remix</a></p></body>
 </html>
